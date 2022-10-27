@@ -11,9 +11,9 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  var uid = '';
-  var name = '';
-  var email = '';
+  var uid = 'Your UID';
+  var name = 'Your Name';
+  var email = 'Your Email';
 
   AuthServices authServices = AuthServices();
 
@@ -44,15 +44,15 @@ class _HomeScreenState extends State<HomeScreen> {
             const SizedBox(
               height: 200,
             ),
-            Text("UID : ${authServices.user!.uid}"),
+            Text("UID : $uid"),
             const SizedBox(
               height: 20,
             ),
-            Text("Name: ${authServices.user!.displayName}"),
+            Text("Name: $name"),
             const SizedBox(
               height: 20,
             ),
-            Text("Mail: ${authServices.user!.email}"),
+            Text("Mail: $email"),
             const SizedBox(
               height: 20,
             ),
@@ -62,6 +62,12 @@ class _HomeScreenState extends State<HomeScreen> {
             ElevatedButton(
                 onPressed: () {
                   authServices.loginUsingGoogle(context).then((value) {
+                    setState(() {
+                      uid = authServices.user!.uid;
+                      name = authServices.user!.displayName!;
+                      email = authServices.user!.email!;
+
+                    });
                     ScaffoldMessenger.of(context).showSnackBar(
                         const SnackBar(content: Text("Signin Successfully")));
                   });
